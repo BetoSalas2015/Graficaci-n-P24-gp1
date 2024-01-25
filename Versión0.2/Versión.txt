@@ -1,0 +1,5 @@
+Versión 0.2
+
+- Se crea la clase Dibujo
+- Dibujo implementa el paint
+- se agrega dibujo a ventana
