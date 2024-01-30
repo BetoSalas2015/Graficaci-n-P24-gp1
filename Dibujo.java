@@ -1,22 +1,39 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.Vector;
 
 public class Dibujo extends Canvas {
 
-    private Punto punto1, punto2;
+    private Punto punto1;
+
+    private Vector<Punto> vectorPuntos;
 
     public Dibujo() {               //constructor
 
     }
 
-    public void asignaPuntos(Punto punto1, Punto punto2) {
+    public void asignaPuntos(Punto punto1) {
         this.punto1 = punto1;
-        this.punto2 = punto2;
+
+    }
+
+    public void asignaPuntos(Vector<Punto> vector) {
+            vectorPuntos = vector;
     }
 
     public void paint(Graphics gc) {
-        if(punto1 != null && punto2 != null)
-             gc.drawLine(punto1.getX(), punto1.getY(), punto2.getX(), punto2.getY());
+        int i;
+        Color color = new Color(50, 26, 94);
+        if (vectorPuntos != null) {
+            for(i = 0; i < vectorPuntos.size() - 1; i++) {
+                gc.drawLine(vectorPuntos.get(i).getX(), vectorPuntos.get(i).getY(), 
+                             vectorPuntos.get(i + 1).getX(), vectorPuntos.get(i + 1).getY());
+                
+            }
+            gc.drawLine(vectorPuntos.get(i).getX(), vectorPuntos.get(i).getY(), 
+                            vectorPuntos.get(0).getX(), vectorPuntos.get(0).getY());
+                            
+        }
 
     }
     

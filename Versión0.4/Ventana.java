@@ -1,15 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 
 public class Ventana extends Frame {
 
     private Dibujo dibujo;
-    private Panel panelDatos, panelPunto1;
-    private Label lblPunto1;
-    private TextField txtPunto1x, txtPunto1y;
-    private Button btnGraficar, btnAgregar;
-    private Vector<Punto> vectorPuntos;
+    private Panel panelDatos, panelPunto1, panelPunto2;
+    private Label lblPunto1, lblPunto2;
+    private TextField txtPunto1x, txtPunto1y, txtPunto2x, txtPunto2y;
+    private Button btnGraficar;
 
     public Ventana() {
         super("Dibujo");
@@ -18,26 +16,28 @@ public class Ventana extends Frame {
         panelDatos.setLayout(new GridLayout(1, 10));
         panelPunto1 = new Panel();
         panelPunto1.setLayout(new GridLayout(1, 2));
-
-        vectorPuntos = new Vector<Punto>();
-
+        panelPunto2 = new Panel();
+        panelPunto2.setLayout(new GridLayout(1, 2));
 
         lblPunto1 = new Label("Punto1: ");
-
+        lblPunto2 = new Label("Punto2: ");
 
         txtPunto1x = new TextField("0");
         txtPunto1y = new TextField("0");
+        txtPunto2x = new TextField("0");
+        txtPunto2y = new TextField("0");
 
-        btnAgregar = new Button("Agregar");
         btnGraficar = new Button("Graficar");
 
         panelPunto1.add(txtPunto1x);
         panelPunto1.add(txtPunto1y);
-
+        panelPunto2.add(txtPunto2x);
+        panelPunto2.add(txtPunto2y);
 
         panelDatos.add(lblPunto1);
         panelDatos.add(panelPunto1);
-        panelDatos.add(btnAgregar);
+        panelDatos.add(lblPunto2);
+        panelDatos.add(panelPunto2);
 
         dibujo = new Dibujo();
 
@@ -49,7 +49,6 @@ public class Ventana extends Frame {
 
         addWindowListener(new CloseWin());
         btnGraficar.addActionListener( new BotónGraficar() );
-        btnAgregar.addActionListener(new BotónAgregar() );
     }
 
     private class CloseWin extends WindowAdapter {
@@ -62,20 +61,15 @@ public class Ventana extends Frame {
     private class BotónGraficar implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-            dibujo.asignaPuntos(vectorPuntos);
-            dibujo.repaint();
+            Punto punto1 = new Punto(Integer.parseInt( txtPunto1x.getText()), 
+                                     Integer.parseInt( txtPunto1y.getText() ));
+            Punto punto2 = new Punto( Integer.parseInt( txtPunto2x.getText()), 
+                                      Integer.parseInt( txtPunto2y.getText() ));
+
+           dibujo.asignaPuntos(punto1, punto2);
+           dibujo.repaint();
         }
         
-    }
-
-    private class BotónAgregar implements ActionListener {
-    
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            vectorPuntos.add( new Punto(Integer.parseInt( txtPunto1x.getText()), 
-                                        Integer.parseInt(txtPunto1y.getText())));
-        }
     }
 
     public static void main(String[] args) {
